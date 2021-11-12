@@ -1,0 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: aquamarine;
+
+}
+
+h1 {
+  display: flex;
+  justify-content: center;
+  margin: 50px auto;
+}
+
+
+.grid-wrapper {
+  display: flex;
+  justify-content: center;
+
+}
+
+.grid { 
+  display: flex;
+  justify-content: center;
+  border: dashed rgb(224, 202, 161) 2px;
+  height: 600px;
+  width: 550px;
+  flex-wrap: wrap;
+}
+
+.grid div {
+  border: rgba(59, 59, 59, 0.301) solid 1px;
+  height: 8%;
+  width: 9%;
+  flex-grow: 1;
+}
+
+.grid div.end-portal { 
+  background-color: rgb(23, 180, 17)
+}
+
+.grid div.frogger {
+  background-color: blueviolet;
+}
+
+
+
+.grid div.obstacle-one {
+  background-color: red;
+}
