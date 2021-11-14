@@ -23,7 +23,6 @@ h1 {
 .grid { 
   display: flex;
   justify-content: center;
-  border: dashed rgb(224, 202, 161) 2px;
   height: 600px;
   width: 550px;
   flex-wrap: wrap;
@@ -44,8 +43,30 @@ h1 {
   background-color: blueviolet;
 }
 
-
-
-.grid div.obstacle-one {
+.grid div.obstacle-one-a{
   background-color: red;
+}
+.grid div.obstacle-one-b{
+  background-color: red;
+}
+.grid div.obstacle-one-c{
+  background-color: red;
+}
+
+.grid div.obstacle-two-a {
+  background-color: rgb(208, 255, 0);
+}
+
+.grid div.obstacle-two-b {
+  background-color: rgb(208, 255, 0);
+  
+}
+
+
+.grid div.obstacle-three-one-a {
+  background-color: rgb(38, 0, 255);
+}
+
+.grid div.obstacle-three-two-a {
+  background-color: rgb(38, 0, 255);
 }
