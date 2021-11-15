@@ -5,7 +5,11 @@
 // Frogger needs a working end goal
 //* Points added to score board 
 //* Obsticles need to be made
-//* collisions need to be made
+// collisions need to be made
+//* collisions bug needs to be fixed
+//* code needs to be refactored
+//* Arrays for the obtsacles
+//* created a hectic new score bug which aggressively loops
 
 
 
@@ -24,19 +28,21 @@ const gridCellCount = width * height
 const finalPortal = Math.floor(Math.random() * 10)
 // const froggerStartPosition = 137
 
+
 let score = 0
 let froggerPosition = 137
 
-let obstacleOnePositionA = 111
-let obstacleOnePositionB = 115
-let obstacleOnePositionC = 119
+let obstacleOnePositions = [111, 115, 118] 
+// let obstacleOne = obstaclePositionOne.slice(0, 1)
 
-let obstacleTwoPositionA = 99
-let obstacleTwoPositionB = 105
 
-let obstacleThreePartOnePositionA = 97
-let obstacleThreePartTwoPositionA = 98
 
+
+// let obstacleTwoPositionA = 99
+// let obstacleTwoPositionB = 105
+
+// let obstacleThreePartOnePositionA = 97
+// let obstacleThreePartTwoPositionA = 98
 
 
 
@@ -66,38 +72,45 @@ function addPortal() {
   cells[finalPortal].classList.add('end-portal')
 }
 
-function addObstaclesOne() {
-  cells[obstacleOnePositionA].classList.add('obstacle-one-a')
-  cells[obstacleOnePositionB].classList.add('obstacle-one-b')
-  cells[obstacleOnePositionC].classList.add('obstacle-one-c')
+function addObstacleOne() {
+  obstacleOnePositions.forEach(obstacle => {
+    cells[obstacle].classList.add('obstacle-one-a')
+  })
+  
 }
-
-function removeObstaclesOne() {
-  cells[obstacleOnePositionA].classList.remove('obstacle-one-a')
-  cells[obstacleOnePositionB].classList.remove('obstacle-one-b')
-  cells[obstacleOnePositionC].classList.remove('obstacle-one-c')
-}
+// cells[obstacleOnePositionB].classList.add('obstacle-one-b')
+// cells[obstacleOnePositionC].classList.add('obstacle-one-c')
 
 
-function addObstaclesTwo() {
-  cells[obstacleTwoPositionA].classList.add('obstacle-two-a')
-  cells[obstacleTwoPositionB].classList.add('obstacle-two-b')
+function removeObstacleOne() {
+  obstacleOnePositions.forEach(obstacle => {
+    cells[obstacle].classList.remove('obstacle-one-a')
+  })
 }
+//   cells[obstacleOnePositionB].classList.remove('obstacle-one-b')
+//   cells[obstacleOnePositionC].classList.remove('obstacle-one-c')
+// }
 
-function removeObstaclesTwo() {
-  cells[obstacleTwoPositionA].classList.remove('obstacle-two-a')
-  cells[obstacleTwoPositionB].classList.remove('obstacle-two-b')
-}
 
-function addObstaclesThree() {
-  cells[obstacleThreePartOnePositionA].classList.add('obstacle-three-one-a')
-  cells[obstacleThreePartTwoPositionA].classList.add('obstacle-three-two-a')
-}
+// function addObstaclesTwo() {
+//   cells[obstacleTwoPositionA].classList.add('obstacle-two-a')
+//   cells[obstacleTwoPositionB].classList.add('obstacle-two-b')
+// }
 
-function removeObstaclesThree() {
-  cells[obstacleThreePartOnePositionA].classList.remove('obstacle-three-one-a')
-  cells[obstacleThreePartTwoPositionA].classList.remove('obstacle-three-two-a')
-}
+// function removeObstaclesTwo() {
+//   cells[obstacleTwoPositionA].classList.remove('obstacle-two-a')
+//   cells[obstacleTwoPositionB].classList.remove('obstacle-two-b')
+// }
+
+// function addObstaclesThree() {
+//   cells[obstacleThreePartOnePositionA].classList.add('obstacle-three-one-a')
+//   cells[obstacleThreePartTwoPositionA].classList.add('obstacle-three-two-a')
+// }
+
+// function removeObstaclesThree() {
+//   cells[obstacleThreePartOnePositionA].classList.remove('obstacle-three-one-a')
+//   cells[obstacleThreePartTwoPositionA].classList.remove('obstacle-three-two-a')
+// }
 function endGame() {
   window.location.reload()
 }
@@ -162,118 +175,123 @@ function handleStart() {
   //***************************
   //* implementing Obstacles *
   //***************************
-  //? How to make multiple obstacles on one line
-  //? How to make larger obstacles taking two div's 
+  //? Work out how to make these into Arrays so they can be grouped.
 
 
-  function obstacleOneA() {
+
+  function MoveObstacleOne() {
     setInterval(() => {
-      removeObstaclesOne()
-      if (obstacleOnePositionA >= 120) {
-        obstacleOnePositionA = 110
-        addObstaclesOne()
-      } else {
-        obstacleOnePositionA++ 
-        addObstaclesOne()
-      }
-    }, 600)
+      removeObstacleOne()
+      console.log('before update', obstacleOnePositions)
+      obstacleOnePositions = obstacleOnePositions.map(obstacleIndex => {
+        if (obstacleIndex >= 120) {
+          return obstacleIndex - 10
+
+        } else {
+          return obstacleIndex + 1 
+
+        }
+      })
+      addObstacleOne() 
+      console.log('after update', obstacleOnePositions)
+    }, 1000)
   
   }
-  obstacleOneA()
+  MoveObstacleOne()
 
-  function obstacleOneB() {
-    setInterval(() => {
-      removeObstaclesOne()
-      if (obstacleOnePositionB >= 120) {
-        obstacleOnePositionB = 110
-        addObstaclesOne()
-      } else { 
-        obstacleOnePositionB++ 
-        addObstaclesOne()
-      }
-    }, 600)
+  // function obstacleOneB() {
+  //   setInterval(() => {
+  //     removeObstaclesOne()
+  //     if (obstacleOnePositionB >= 120) {
+  //       obstacleOnePositionB = 110
+  //       addObstaclesOne()
+  //     } else { 
+  //       obstacleOnePositionB++ 
+  //       addObstaclesOne()
+  //     }
+  //   }, 600)
   
-  }
-  obstacleOneB()
+  // }
+  // obstacleOneB()
 
-  function obstacleOneC() {
-    setInterval(() => {
-      removeObstaclesOne()
-      if (obstacleOnePositionC >= 120) {
-        obstacleOnePositionC = 110
-        addObstaclesOne()
-      } else { 
-        obstacleOnePositionC++ 
-        addObstaclesOne()
-      }
-    }, 600)
+  // function obstacleOneC() {
+  //   setInterval(() => {
+  //     removeObstaclesOne()
+  //     if (obstacleOnePositionC >= 120) {
+  //       obstacleOnePositionC = 110
+  //       addObstaclesOne()
+  //     } else { 
+  //       obstacleOnePositionC++ 
+  //       addObstaclesOne()
+  //     }
+  //   }, 600)
   
-  }
-  obstacleOneC()
+  // }
+  // obstacleOneC()
 
 
-  function obstacleTwoA() {
-    setInterval(() => {
-      removeObstaclesTwo()
-      if (obstacleTwoPositionA >= 109) {
-        obstacleTwoPositionA = 99
-        addObstaclesTwo()
-      } else {
-        obstacleTwoPositionA++ 
-        addObstaclesTwo()
-      }
-    }, 150)
+  // function obstacleTwoA() {
+  //   setInterval(() => {
+  //     removeObstaclesTwo()
+  //     if (obstacleTwoPositionA >= 109) {
+  //       obstacleTwoPositionA = 99
+  //       addObstaclesTwo()
+  //     } else {
+  //       obstacleTwoPositionA++ 
+  //       addObstaclesTwo()
+  //     }
+  //   }, 150)
   
-  }
-  obstacleTwoA()
+  // }
+  // obstacleTwoA()
 
-  function obstacleTwoB() {
-    setInterval(() => {
-      removeObstaclesTwo()
-      if (obstacleTwoPositionB >= 109) {
-        obstacleTwoPositionB = 99
-        addObstaclesTwo()
-      } else {
-        obstacleTwoPositionB++ 
-        addObstaclesTwo()
-      }
-    }, 150)
+  // function obstacleTwoB() {
+  //   setInterval(() => {
+  //     removeObstaclesTwo()
+  //     if (obstacleTwoPositionB >= 109) {
+  //       obstacleTwoPositionB = 99
+  //       addObstaclesTwo()
+  //     } else {
+  //       obstacleTwoPositionB++ 
+  //       addObstaclesTwo()
+  //     }
+  //   }, 150)
   
-  }
-  obstacleTwoB()
+  // }
+  // obstacleTwoB()
 
 
 
-  function obstaclesThreePartOneA() {
-    setInterval(() => {
-      removeObstaclesThree()
-      if (obstacleThreePartOnePositionA <= 88) {
-        obstacleThreePartOnePositionA = 98
-      } else {
-        obstacleThreePartOnePositionA-- 
-        addObstaclesThree()
+  // function obstaclesThreePartOneA() {
+  //   setInterval(() => {
+  //     removeObstaclesThree()
+  //     if (obstacleThreePartOnePositionA <= 88) {
+  //       obstacleThreePartOnePositionA = 98
+  //     } else {
+  //       obstacleThreePartOnePositionA-- 
+  //       addObstaclesThree()
       
-      }
-    }, 600)
+  //     }
+  //   }, 600)
   
-  }
-  obstaclesThreePartOneA()
+  // }
+  // obstaclesThreePartOneA()
 
-  function obstaclesThreePartTwoA() {
-    setInterval(() => {
-      removeObstaclesThree()
-      if (obstacleThreePartTwoPositionA <= 88) {
-        obstacleThreePartTwoPositionA = 98
-        addObstaclesThree()
-      } else {
-        obstacleThreePartTwoPositionA-- 
-        addObstaclesThree()
+  // function obstaclesThreePartTwoA() {
+  //   setInterval(() => {
+  //     removeObstaclesThree()
+  //     if (obstacleThreePartTwoPositionA <= 88) {
+  //       obstacleThreePartTwoPositionA = 98
+  //       addObstaclesThree()
+  //     } else {
+  //       obstacleThreePartTwoPositionA-- 
+  //       addObstaclesThree()
       
-      }
-    }, 600)
+  //     }
+  //   }, 600)
   
-  }
-  obstaclesThreePartTwoA()
+  // }
+  // obstaclesThreePartTwoA()
 
   //********************************** 
   //* Creating Win / Lose collisions*            
@@ -283,15 +301,16 @@ function handleStart() {
   //? Collisions are only working when frogger hits an obstacle, not when an obsacle hits frogger.
 
   function handleLose() {
-    if (obstacleOnePositionA === froggerPosition ||
-    obstacleOnePositionB === froggerPosition ||
-    obstacleOnePositionC === froggerPosition ||
+    if (obstacle === froggerPosition) {
+    // obstacleOne === froggerPosition ||
+    // obstacleOne === froggerPosition ||
 
-    obstacleTwoPositionA === froggerPosition || 
-    obstacleTwoPositionB === froggerPosition ||
+      // obstacleTwoPositionA === froggerPosition || 
+      // obstacleTwoPositionB === froggerPosition ||
 
-    obstacleThreePartOnePositionA === froggerPosition ||
-    obstacleThreePartTwoPositionA === froggerPosition) {
+      // obstacleThreePartOnePositionA === froggerPosition ||
+      // obstacleThreePartTwoPositionA === froggerPosition
+    
       console.log('you lose')
       window.alert('dead')
       endGame()
