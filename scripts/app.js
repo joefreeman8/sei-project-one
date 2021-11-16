@@ -26,23 +26,33 @@ const width = 11
 const height = 13
 const gridCellCount = width * height 
 const finalPortal = Math.floor(Math.random() * 10)
+const startingPosition = 137
+
 // const froggerStartPosition = 137
+const water = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54]
 
 
+let intervalId = null
+let timer = null
 let score = 0
 let froggerPosition = 137
 
-let obstacleOnePositions = [111, 115, 118] 
-// let obstacleOne = obstaclePositionOne.slice(0, 1)
+const obstaclePositions = [
+  [111, 115, 118], 
+  [99, 105], 
+  [89, 90, 91, 95, 96],
+  [85, 86, 87, 80, 81]
+]
+
+
+
+let logFirstRow = [44, 45, 46, 50, 51, 52]
 
 
 
 
-// let obstacleTwoPositionA = 99
-// let obstacleTwoPositionB = 105
 
-// let obstacleThreePartOnePositionA = 97
-// let obstacleThreePartTwoPositionA = 98
+
 
 
 
@@ -59,6 +69,10 @@ function createGrid() {
 createGrid()
 
 
+
+
+
+
 //* Functions - Creating Frogger & Obstacles 
 function addFrogger() {
   cells[froggerPosition].classList.add('frogger') 
@@ -72,262 +86,207 @@ function addPortal() {
   cells[finalPortal].classList.add('end-portal')
 }
 
-function addObstacleOne() {
-  obstacleOnePositions.forEach(obstacle => {
-    cells[obstacle].classList.add('obstacle-one-a')
-  })
-  
-}
-// cells[obstacleOnePositionB].classList.add('obstacle-one-b')
-// cells[obstacleOnePositionC].classList.add('obstacle-one-c')
-
-
-function removeObstacleOne() {
-  obstacleOnePositions.forEach(obstacle => {
-    cells[obstacle].classList.remove('obstacle-one-a')
+function addObstacles(obstacles, className) {
+  // console.log('adding', obstacles)
+  obstacles.forEach(obstacle => {
+    cells[obstacle].classList.add(className)
   })
 }
-//   cells[obstacleOnePositionB].classList.remove('obstacle-one-b')
-//   cells[obstacleOnePositionC].classList.remove('obstacle-one-c')
-// }
+
+function removeObstacles(obstacles, className) {
+  // console.log('removing', obstacles)
+  obstacles.forEach(obstacle => {
+    cells[obstacle].classList.remove(className)
+  })
+}
 
 
-// function addObstaclesTwo() {
-//   cells[obstacleTwoPositionA].classList.add('obstacle-two-a')
-//   cells[obstacleTwoPositionB].classList.add('obstacle-two-b')
-// }
+function addWater() { 
+  water.forEach(cell => {
+    cells[cell].classList.add('water')
+  })
+}
+function removeWater() { 
+  water.forEach(cell => {
+    cells[cell].classList.remove('water')
+  })
+}
 
-// function removeObstaclesTwo() {
-//   cells[obstacleTwoPositionA].classList.remove('obstacle-two-a')
-//   cells[obstacleTwoPositionB].classList.remove('obstacle-two-b')
-// }
 
-// function addObstaclesThree() {
-//   cells[obstacleThreePartOnePositionA].classList.add('obstacle-three-one-a')
-//   cells[obstacleThreePartTwoPositionA].classList.add('obstacle-three-two-a')
-// }
 
-// function removeObstaclesThree() {
-//   cells[obstacleThreePartOnePositionA].classList.remove('obstacle-three-one-a')
-//   cells[obstacleThreePartTwoPositionA].classList.remove('obstacle-three-two-a')
-// }
+function addLog() {
+  logFirstRow.forEach(log => {
+    cells[log].classList.add('log')
+  })
+}
+
+function removeLog() {
+  logFirstRow.forEach(log => {
+    cells[log].classList.remove('log')
+  })
+}
+
+
+
+
 function endGame() {
   window.location.reload()
 }
 
-function handleStart() {
+function startGame() {
   if (startBtn === false) {
     return
   }
-
-
-  addFrogger()                     //* this frogger helps the reset after win/lose          
-  addPortal()
-
-
-
-  //******************************
-  //* Creating Frogger Movement *
-  //****************************** 
-
-  function handleKeyControls(e) {
-    const x = froggerPosition % width
-    const y = Math.floor(froggerPosition / width)
-  
-    removeFrogger()              //* frogger must be removed first
-
-    switch (e.code) {
-
-      case 'KeyD':           //* right
-        if (x < width - 1) {
-          froggerPosition++
-        }
-        break
-
-      case 'KeyA':           //* left
-        if (x > 0) {
-          froggerPosition--
-        }
-        break
-
-      case 'KeyW':            //* up
-        if (y > 0) {
-          froggerPosition -= width
-        }
-        break
-
-      case 'KeyS':            //* down
-        if (y < width - 1) {
-          froggerPosition += width
-        }
-        break
-
-      default:
-        console.log('key not recognised')
-    }
-    addFrogger()
-    handleLose()
-    handleWin() 
-  }
-
-  document.addEventListener('keyup', handleKeyControls)
-
-  //***************************
-  //* implementing Obstacles *
-  //***************************
-  //? Work out how to make these into Arrays so they can be grouped.
-
-
-
-  function MoveObstacleOne() {
-    setInterval(() => {
-      removeObstacleOne()
-      console.log('before update', obstacleOnePositions)
-      obstacleOnePositions = obstacleOnePositions.map(obstacleIndex => {
-        if (obstacleIndex >= 120) {
-          return obstacleIndex - 10
-
-        } else {
-          return obstacleIndex + 1 
-
-        }
-      })
-      addObstacleOne() 
-      console.log('after update', obstacleOnePositions)
-    }, 1000)
-  
-  }
-  MoveObstacleOne()
-
-  // function obstacleOneB() {
-  //   setInterval(() => {
-  //     removeObstaclesOne()
-  //     if (obstacleOnePositionB >= 120) {
-  //       obstacleOnePositionB = 110
-  //       addObstaclesOne()
-  //     } else { 
-  //       obstacleOnePositionB++ 
-  //       addObstaclesOne()
-  //     }
-  //   }, 600)
-  
-  // }
-  // obstacleOneB()
-
-  // function obstacleOneC() {
-  //   setInterval(() => {
-  //     removeObstaclesOne()
-  //     if (obstacleOnePositionC >= 120) {
-  //       obstacleOnePositionC = 110
-  //       addObstaclesOne()
-  //     } else { 
-  //       obstacleOnePositionC++ 
-  //       addObstaclesOne()
-  //     }
-  //   }, 600)
-  
-  // }
-  // obstacleOneC()
-
-
-  // function obstacleTwoA() {
-  //   setInterval(() => {
-  //     removeObstaclesTwo()
-  //     if (obstacleTwoPositionA >= 109) {
-  //       obstacleTwoPositionA = 99
-  //       addObstaclesTwo()
-  //     } else {
-  //       obstacleTwoPositionA++ 
-  //       addObstaclesTwo()
-  //     }
-  //   }, 150)
-  
-  // }
-  // obstacleTwoA()
-
-  // function obstacleTwoB() {
-  //   setInterval(() => {
-  //     removeObstaclesTwo()
-  //     if (obstacleTwoPositionB >= 109) {
-  //       obstacleTwoPositionB = 99
-  //       addObstaclesTwo()
-  //     } else {
-  //       obstacleTwoPositionB++ 
-  //       addObstaclesTwo()
-  //     }
-  //   }, 150)
-  
-  // }
-  // obstacleTwoB()
-
-
-
-  // function obstaclesThreePartOneA() {
-  //   setInterval(() => {
-  //     removeObstaclesThree()
-  //     if (obstacleThreePartOnePositionA <= 88) {
-  //       obstacleThreePartOnePositionA = 98
-  //     } else {
-  //       obstacleThreePartOnePositionA-- 
-  //       addObstaclesThree()
-      
-  //     }
-  //   }, 600)
-  
-  // }
-  // obstaclesThreePartOneA()
-
-  // function obstaclesThreePartTwoA() {
-  //   setInterval(() => {
-  //     removeObstaclesThree()
-  //     if (obstacleThreePartTwoPositionA <= 88) {
-  //       obstacleThreePartTwoPositionA = 98
-  //       addObstaclesThree()
-  //     } else {
-  //       obstacleThreePartTwoPositionA-- 
-  //       addObstaclesThree()
-      
-  //     }
-  //   }, 600)
-  
-  // }
-  // obstaclesThreePartTwoA()
-
-  //********************************** 
-  //* Creating Win / Lose collisions*            
-  //********************************* 
-
-
-  //? Collisions are only working when frogger hits an obstacle, not when an obsacle hits frogger.
-
-  function handleLose() {
-    if (obstacle === froggerPosition) {
-    // obstacleOne === froggerPosition ||
-    // obstacleOne === froggerPosition ||
-
-      // obstacleTwoPositionA === froggerPosition || 
-      // obstacleTwoPositionB === froggerPosition ||
-
-      // obstacleThreePartOnePositionA === froggerPosition ||
-      // obstacleThreePartTwoPositionA === froggerPosition
-    
-      console.log('you lose')
-      window.alert('dead')
-      endGame()
-    }
-  }
-
-  function handleWin() {
-    if (finalPortal === froggerPosition) {
-      score = score + 100
-      displayScore.textContent = score
-      // window.alert('you win', score)
-      handleStart()
-    }
-  } 
 }
 
+startGame()
+addFrogger()                     //* this frogger helps the reset after win/lose          
+addPortal()
+addLog()
+addWater()
+
+
+
+//******************************
+//* Creating Frogger Movement *
+//****************************** 
+
+function handleKeyControls(e) {
+  const x = froggerPosition % width
+  const y = Math.floor(froggerPosition / width)
+  
+  removeFrogger()              //* frogger must be removed first
+
+  switch (e.code) {
+
+    case 'KeyD':           //* right
+      if (x < width - 1) {
+        froggerPosition++
+      }
+      break
+
+    case 'KeyA':           //* left
+      if (x > 0) {
+        froggerPosition--
+      }
+      break
+
+    case 'KeyW':            //* up
+      if (y > 0) {
+        froggerPosition -= width
+      }
+      break
+
+    case 'KeyS':            //* down
+      if (y < width - 1) {
+        froggerPosition += width
+      }
+      break
+
+    default: 'Space'
+      console.log('key not recognised')
+  }
+  addFrogger()
+  console.log(froggerPosition)
+  handleLose()
+  handleWin() 
+}
+
+document.addEventListener('keyup', handleKeyControls)
+
+
+//***************************
+//*    MOVING  Obstacles *
+//***************************
+
+function moveObstacle(
+  intervalTime, 
+  obstacleIndexTarget, 
+  rowIndex,
+  className,
+  direction = 1
+) {
+  timer = setInterval(() => {
+    removeObstacles(obstaclePositions[rowIndex], className)
+    obstaclePositions[rowIndex] = obstaclePositions[rowIndex].map(obstacleIndex => {
+      if (obstacleIndex >= obstacleIndexTarget && direction === 1) {
+        return obstacleIndex -= 10
+      } else if (obstacleIndex <= obstacleIndexTarget && direction === -1) {
+        return obstacleIndex += 10
+      } else {
+        return obstacleIndex += direction 
+      }
+    })
+    addObstacles(obstaclePositions[rowIndex], className) 
+    handleLose()
+  
+  }, intervalTime)
+}
+moveObstacle(900, 120, 0, 'obstacle-one')
+moveObstacle(300, 109, 1, 'obstacle-two')
+moveObstacle(800, 88, 2, 'obstacle-three', -1)
+moveObstacle(1500, 77, 3, 'obstacle-four', -1)
+
+
+
+function moveLogFirstRow() {
+  timer = setInterval(() => {
+    if ('water.log' === water) {
+      removeWater()
+    } else {
+      addWater()
+    }
+    removeLog()
+    logFirstRow = logFirstRow.map(logIndex => {
+      if (logIndex >= 54) {
+        return logIndex - 10
+      } else {
+        return logIndex + 1
+      }
+    })
+    addLog()
+    
+  
+  }, 800)
+}
+
+moveLogFirstRow()
+
+
+//********************************** 
+//* Creating Win / Lose collisions *            
+//********************************* 
+
+
+//? Collisions are only working when frogger hits an obstacle, not when an obstacle hits frogger.
+
+function handleLose() {
+  obstaclePositions.forEach(row => {
+    row.forEach(obstacle => {
+      if (cells[obstacle].classList.contains('frogger')) {
+        return window.location.reload()
+      } 
+    })
+  })
+
+
+  water.forEach(river => {
+    if (river === froggerPosition) {
+      window.location.reload()
+    } 
+  })
+}
+
+function handleWin() {
+  if (finalPortal === froggerPosition) {
+    score += 100
+    displayScore.textContent = score
+    window.alert('you win', score)
+    window.location.reload()
+    startGame()
+  }
+} 
+
+
 //* Events 
-startBtn.addEventListener('click', handleStart)
-
-
+startBtn.addEventListener('click', startGame)

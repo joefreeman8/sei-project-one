@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: aquamarine;
+  background-color: rgb(5, 31, 22);
 
 }
 
@@ -11,6 +11,7 @@ h1 {
   display: flex;
   justify-content: center;
   margin: 50px auto;
+  color: grey;
 }
 
 
@@ -28,8 +29,13 @@ h1 {
   flex-wrap: wrap;
 }
 
+p {
+  color: grey;
+}
+
 .grid div {
   border: rgba(59, 59, 59, 0.301) solid 1px;
+  color: grey;
   height: 8%;
   width: 9%;
   flex-grow: 1;
@@ -43,30 +49,28 @@ h1 {
   background-color: blueviolet;
 }
 
-.grid div.obstacle-one-a{
-  background-color: red;
-}
-.grid div.obstacle-one-b{
-  background-color: red;
-}
-.grid div.obstacle-one-c{
+.grid div.obstacle-one{
   background-color: red;
 }
 
-.grid div.obstacle-two-a {
+.grid div.obstacle-two {
   background-color: rgb(208, 255, 0);
 }
 
-.grid div.obstacle-two-b {
-  background-color: rgb(208, 255, 0);
-  
-}
-
-
-.grid div.obstacle-three-one-a {
+.grid div.obstacle-three {
   background-color: rgb(38, 0, 255);
 }
 
-.grid div.obstacle-three-two-a {
-  background-color: rgb(38, 0, 255);
+.grid div.obstacle-four {
+  background-color: rgb(255, 0, 221);
+}
+
+.grid div.water {
+  background-color: rgba(0, 255, 255, 0.432);
+  position: relative;
+}
+
+.grid div.water.log::before {
+  background-color: brown;
+  position: absolute;
 }
