@@ -14,6 +14,13 @@ h1 {
   color: grey;
 }
 
+/* .controls-wrapper {
+  display: flex;
+  justify-content: center;
+  align-content: center; 
+  
+} */
+
 
 .grid-wrapper {
   display: flex;
@@ -39,6 +46,10 @@ p {
   height: 8%;
   width: 9%;
   flex-grow: 1;
+}
+
+.hidden {
+  display: none;
 }
 
 .grid div.end-portal { 

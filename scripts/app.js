@@ -17,8 +17,9 @@
 const grid = document.querySelector('.grid')
 const cells = []
 const displayScore = document.querySelector('#score-display')
+const displayLives = document.querySelector('#lives-display')
 const startBtn = document.querySelector('#start')
-
+const hide = document.querySelector('.hidden')
 
 
 //* Variables
@@ -27,30 +28,18 @@ const height = 13
 const gridCellCount = width * height 
 const finalPortal = Math.floor(Math.random() * 10)
 const startingPosition = 137
-
-// const froggerStartPosition = 137
-
-
-
-let intervalId = null
-let timer = null
-let score = 0
-let froggerPosition = 137
-
 const obstaclePositions = [
   [111, 115, 118], 
   [99, 105], 
   [89, 90, 91, 95, 96],
   [85, 86, 87, 80, 81]
 ]
-
 const logPositions = [
   [45, 46, 51, 52],
   [34, 35, 36, 40, 41, 42],
   [24, 25, 28, 29, 30],
   [13, 14, 17, 18, 21]
 ]
-
 const waterCellPositions = [
   [44, 47, 48, 49, 50, 53, 54],
   [33, 37, 38, 39, 43],
@@ -59,14 +48,24 @@ const waterCellPositions = [
 ]
 
 
+let lives = 3
+let intervalId = null
+let timer = null
+let score = 0
+let froggerPosition = 137
 
 
 
-//* Building the grid 
+
+
+
+//**************************
+//*   Building the grid    *
+//**************************
+
 function createGrid() {
   for (let i = 0; i < gridCellCount; i++) {
     const cell = document.createElement('div')
-    cell.textContent = i 
     cell.setAttribute('data-index', i)
     cells.push(cell)
     grid.appendChild(cell)
@@ -75,11 +74,10 @@ function createGrid() {
 createGrid()
 
 
+//*********************************************/
+//* Functions - adding Frogger & Obstacles   *
+//********************************************/
 
-// addWater()
-
-
-//* Functions - Creating Frogger & Obstacles 
 function addFrogger() {
   cells[froggerPosition].classList.add('frogger') 
 }
@@ -90,6 +88,10 @@ function removeFrogger() {
 
 function addPortal() {
   cells[finalPortal].classList.add('end-portal')
+}
+
+function removePortal() {
+  cells[finalPortal].classList.remove('end-portal')
 }
 
 function addObstacles(obstacles, className) {
@@ -106,8 +108,6 @@ function removeObstacles(obstacles, className) {
   })
 }
 
-
-
 function addLogs(logs, className) {
   logs.forEach(log => {
     cells[log].classList.add(className)
@@ -121,13 +121,12 @@ function removeLogs(logs, className) {
   })
 }
 
-
-
 function addWaterCell(water, className) { 
   water.forEach(cell => {
     cells[cell].classList.add(className)
   })
 }
+
 function removeWaterCell(water, className) { 
   water.forEach(cell => {
     cells[cell].classList.remove(className)
@@ -135,16 +134,9 @@ function removeWaterCell(water, className) {
 }
 
 
-
-
-
-
-
-function endGame() {
-  window.location.reload()
-}
-
 function startGame() {
+  displayLives.textContent = lives
+  checkEndGame()
   addFrogger()                           
   addPortal()
   moveObstacle(900, 120, 0, 'obstacle-one')
@@ -160,12 +152,30 @@ function startGame() {
   moveWater(500, 32, 2, 'water-three')
   moveWater(500, 11, 3, 'water-four', -1)
   startBtn.style.visibility = 'hidden'
-
+  document.addEventListener('keyup', handleKeyControls)
 }
 
+function endGame(endgamestatement) {
+  grid.classList.remove('grid')
+  // grid.classList.add('hide')
+  displayScore.innerHTML = endgamestatement
+}
 
-
-
+function checkEndGame() {
+  timer = setInterval(() => {
+    if (lives === 0) {
+      endGame(`You are dead, you scored ${score}`)
+    }
+    if (finalPortal === froggerPosition) {
+      score += 1000
+      if (score === 1000) {
+        removePortal()
+        displayScore.textContent = score
+      }
+      endGame(`Champion, your score is ${score}`)
+    }
+  }, 100)
+}
 
 //******************************
 //* Creating Frogger Movement *
@@ -207,17 +217,15 @@ function handleKeyControls(e) {
       console.log('key not recognised')
   }
   addFrogger()
-  console.log(froggerPosition)
-  handleLose()
-  handleWin() 
+  checkEndGame()
 }
 
-document.addEventListener('keyup', handleKeyControls)
 
 
-//***************************
-//*    MOVING  Obstacles *
-//***************************
+
+//*****************************************
+//*    M O V I N G    O b s t a c l e s   *
+//*****************************************
 
 function moveObstacle(
   intervalTime, 
@@ -264,18 +272,6 @@ function moveLog(
     })
     addLogs(logPositions[rowIndex], className) 
 
-    // if (addLogs(logPositions[rowIndex], className) === froggerPosition) {
-
-    // }.map(froggerLog => {
-    //   if (froggerLog >= logIndexTarget && direction === 1) {
-    //     return froggerLog -= 10
-    //   } else if (froggerLog <= logIndexTarget && direction === -1) {
-    //     return froggerLog += 10
-    //   } else {
-    //     return froggerLog += direction 
-    //   }
-    // })
-  
   }, intervalTime)
 }
 
@@ -312,13 +308,17 @@ function moveWater(
 //********************************* 
 
 
-//? Collisions are only working when frogger hits an obstacle, not when an obstacle hits frogger.
-
 function handleLose() {
   obstaclePositions.forEach(row => {
     row.forEach(obstacle => {
       if (cells[obstacle].classList.contains('frogger')) {
-        return endGame()
+        removeFrogger()
+        froggerPosition = 137
+        lives = lives - 1
+        displayLives.textContent = lives
+        checkEndGame()
+        addFrogger()
+        return 
       } 
     })
   })
@@ -326,21 +326,28 @@ function handleLose() {
   waterCellPositions.forEach(waterCell => {
     waterCell.forEach(water => {
       if (cells[water].classList.contains('frogger')) {
-        return endGame()
+        removeFrogger()
+        froggerPosition = 137
+        lives = lives - 1
+        displayLives.textContent = lives
+        checkEndGame()
+        addFrogger()
+        return 
+        
       }
     })
   })
 }
 
-function handleWin() {
-  if (finalPortal === froggerPosition) {
-    score += 100
-    displayScore.textContent = score
-    window.alert('you win', score)
-    window.location.reload()
-    startGame()
-  }
-} 
+// function handleWin() {
+//   if (finalPortal === froggerPosition) {
+//     score += 100
+//     displayScore.textContent = score
+//     alert('you win', score)
+//     location.reload()
+//     startGame()
+//   }
+// } 
 
 
 //* Events 
