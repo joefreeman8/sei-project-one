@@ -1,15 +1,15 @@
-//  Create the grid
-// * Game starts by hitting Space bar
-//  Create frogger start point 
-// Frogger needs to be able to move on the grid
-// Frogger needs a working end goal
+//*//  Create the grid
+//* Game starts by hitting Space bar
+//*//  Create frogger start point 
+//*// Frogger needs to be able to move on the grid
+//*// Frogger needs a working end goal
 //* Points added to score board 
-//* Obsticles need to be made
-// collisions need to be made
-//* collisions bug needs to be fixed
-//* code needs to be refactored
-//* Arrays for the obtsacles
-//* created a hectic new score bug which aggressively loops
+//*// Obsticles need to be made
+//*// collisions need to be made
+//*// collisions bug needs to be fixed
+//*// code needs to be refactored
+//*// Arrays for the obtsacles
+//*// created a hectic new score bug which aggressively loops
 
 
 
@@ -29,7 +29,7 @@ const finalPortal = Math.floor(Math.random() * 10)
 const startingPosition = 137
 
 // const froggerStartPosition = 137
-const water = [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54]
+
 
 
 let intervalId = null
@@ -44,13 +44,19 @@ const obstaclePositions = [
   [85, 86, 87, 80, 81]
 ]
 
+const logPositions = [
+  [45, 46, 51, 52],
+  [34, 35, 36, 40, 41, 42],
+  [24, 25, 28, 29, 30],
+  [13, 14, 17, 18, 21]
+]
 
-
-let logFirstRow = [44, 45, 46, 50, 51, 52]
-
-
-
-
+const waterCellPositions = [
+  [44, 47, 48, 49, 50, 53, 54],
+  [33, 37, 38, 39, 43],
+  [22, 23, 26, 27, 31, 32],
+  [11, 12, 15, 16, 17, 19, 20]
+]
 
 
 
@@ -70,7 +76,7 @@ createGrid()
 
 
 
-
+// addWater()
 
 
 //* Functions - Creating Frogger & Obstacles 
@@ -101,30 +107,35 @@ function removeObstacles(obstacles, className) {
 }
 
 
-function addWater() { 
+
+function addLogs(logs, className) {
+  logs.forEach(log => {
+    cells[log].classList.add(className)
+  })
+}
+
+function removeLogs(logs, className) {
+  // console.log('adding', obstacles)
+  logs.forEach(log => {
+    cells[log].classList.remove(className)
+  })
+}
+
+
+
+function addWaterCell(water, className) { 
   water.forEach(cell => {
-    cells[cell].classList.add('water')
+    cells[cell].classList.add(className)
   })
 }
-function removeWater() { 
+function removeWaterCell(water, className) { 
   water.forEach(cell => {
-    cells[cell].classList.remove('water')
+    cells[cell].classList.remove(className)
   })
 }
 
 
 
-function addLog() {
-  logFirstRow.forEach(log => {
-    cells[log].classList.add('log')
-  })
-}
-
-function removeLog() {
-  logFirstRow.forEach(log => {
-    cells[log].classList.remove('log')
-  })
-}
 
 
 
@@ -134,16 +145,25 @@ function endGame() {
 }
 
 function startGame() {
-  if (startBtn === false) {
-    return
-  }
+  addFrogger()                           
+  addPortal()
+  moveObstacle(900, 120, 0, 'obstacle-one')
+  moveObstacle(300, 109, 1, 'obstacle-two')
+  moveObstacle(1000, 88, 2, 'obstacle-three', -1)
+  moveObstacle(600, 77, 3, 'obstacle-four', -1)
+  moveLog(900, 54, 0, 'log-one')
+  moveLog(700, 33, 1, 'log-two', -1)
+  moveLog(500, 32, 2, 'log-three')
+  moveLog(500, 11, 3, 'log-four', -1) 
+  moveWater(900, 54, 0, 'water-one')
+  moveWater(700, 33, 1, 'water-two', -1)
+  moveWater(500, 32, 2, 'water-three')
+  moveWater(500, 11, 3, 'water-four', -1)
+  startBtn.style.visibility = 'hidden'
+
 }
 
-startGame()
-addFrogger()                     //* this frogger helps the reset after win/lose          
-addPortal()
-addLog()
-addWater()
+
 
 
 
@@ -154,7 +174,7 @@ addWater()
 function handleKeyControls(e) {
   const x = froggerPosition % width
   const y = Math.floor(froggerPosition / width)
-  
+  e.preventDefault()
   removeFrogger()              //* frogger must be removed first
 
   switch (e.code) {
@@ -182,8 +202,8 @@ function handleKeyControls(e) {
         froggerPosition += width
       }
       break
-
-    default: 'Space'
+    
+    default: 
       console.log('key not recognised')
   }
   addFrogger()
@@ -222,35 +242,69 @@ function moveObstacle(
   
   }, intervalTime)
 }
-moveObstacle(900, 120, 0, 'obstacle-one')
-moveObstacle(300, 109, 1, 'obstacle-two')
-moveObstacle(800, 88, 2, 'obstacle-three', -1)
-moveObstacle(1500, 77, 3, 'obstacle-four', -1)
 
 
-
-function moveLogFirstRow() {
+function moveLog(
+  intervalTime, 
+  logIndexTarget, 
+  rowIndex,
+  className,
+  direction = 1
+) {
   timer = setInterval(() => {
-    if ('water.log' === water) {
-      removeWater()
-    } else {
-      addWater()
-    }
-    removeLog()
-    logFirstRow = logFirstRow.map(logIndex => {
-      if (logIndex >= 54) {
-        return logIndex - 10
+    removeLogs(logPositions[rowIndex], className)
+    logPositions[rowIndex] = logPositions[rowIndex].map(logIndex => {
+      if (logIndex >= logIndexTarget && direction === 1) {
+        return logIndex -= 10
+      } else if (logIndex <= logIndexTarget && direction === -1) {
+        return logIndex += 10
       } else {
-        return logIndex + 1
+        return logIndex += direction 
       }
     })
-    addLog()
-    
+    addLogs(logPositions[rowIndex], className) 
+
+    // if (addLogs(logPositions[rowIndex], className) === froggerPosition) {
+
+    // }.map(froggerLog => {
+    //   if (froggerLog >= logIndexTarget && direction === 1) {
+    //     return froggerLog -= 10
+    //   } else if (froggerLog <= logIndexTarget && direction === -1) {
+    //     return froggerLog += 10
+    //   } else {
+    //     return froggerLog += direction 
+    //   }
+    // })
   
-  }, 800)
+  }, intervalTime)
 }
 
-moveLogFirstRow()
+
+function moveWater(
+  intervalTime, 
+  waterIndexTarget, 
+  rowIndex,
+  className,
+  direction = 1
+) {
+  timer = setInterval(() => {
+    removeWaterCell(waterCellPositions[rowIndex], className)
+    waterCellPositions[rowIndex] = waterCellPositions[rowIndex].map(waterIndex => {
+      if (waterIndex >= waterIndexTarget && direction === 1) {
+        return waterIndex -= 10
+      } else if (waterIndex <= waterIndexTarget && direction === -1) {
+        return waterIndex += 10
+      } else {
+        return waterIndex += direction 
+      }
+    })
+    
+    addWaterCell(waterCellPositions[rowIndex], className) 
+    handleLose()
+  
+  }, intervalTime)
+}
+
 
 
 //********************************** 
@@ -264,16 +318,17 @@ function handleLose() {
   obstaclePositions.forEach(row => {
     row.forEach(obstacle => {
       if (cells[obstacle].classList.contains('frogger')) {
-        return window.location.reload()
+        return endGame()
       } 
     })
   })
 
-
-  water.forEach(river => {
-    if (river === froggerPosition) {
-      window.location.reload()
-    } 
+  waterCellPositions.forEach(waterCell => {
+    waterCell.forEach(water => {
+      if (cells[water].classList.contains('frogger')) {
+        return endGame()
+      }
+    })
   })
 }
 

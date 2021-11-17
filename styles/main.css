@@ -46,31 +46,82 @@ p {
 }
 
 .grid div.frogger {
-  background-color: blueviolet;
+  /* background-color: chartreuse; */
+  background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif'); 
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .grid div.obstacle-one{
   background-color: red;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
+
 
 .grid div.obstacle-two {
-  background-color: rgb(208, 255, 0);
+  background-color: yellow;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
+
 
 .grid div.obstacle-three {
-  background-color: rgb(38, 0, 255);
+  background-color: purple;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
+
 
 .grid div.obstacle-four {
-  background-color: rgb(255, 0, 221);
+  background-color: tomato;
+  background-size: contain;
 }
 
-.grid div.water {
-  background-color: rgba(0, 255, 255, 0.432);
+
+
+.grid div.water-one {
+  background-color: rgb(0, 255, 255);
   position: relative;
 }
 
-.grid div.water.log::before {
+.grid div.water-two {
+  background-color: rgb(0, 255, 255);
+  position: relative;
+}
+
+.grid div.water-three {
+  background-color: rgb(0, 255, 255);
+  position: relative;
+}
+
+.grid div.water-four {
+  background-color: rgb(0, 255, 255);
+  position: relative;
+}
+
+
+
+.grid div.log-one {
   background-color: brown;
+}
+
+.grid div.log-two {
+  background-color: brown;
+}
+
+.grid div.log-three {
+  background-color: brown;
+}
+
+.grid div.log-four {
+  background-color: brown;
+}
+
+.grid div.water.log::before {
+  content: '';
+  background-color: orange;
   position: absolute;
+  size: contain;
+  background-repeat: no-repeat;
 }
