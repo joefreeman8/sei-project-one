@@ -1,9 +1,9 @@
 //*//  Create the grid
-//* Game starts by hitting Space bar
+
 //*//  Create frogger start point 
 //*// Frogger needs to be able to move on the grid
 //*// Frogger needs a working end goal
-//* Points added to score board 
+//*// Points added to score board 
 //*// Obsticles need to be made
 //*// collisions need to be made
 //*// collisions bug needs to be fixed
@@ -14,12 +14,19 @@
 
 
 //* DOM Elements 
-const grid = document.querySelector('.grid')
+const grid = document.querySelector('#grid')
 const cells = []
 const displayScore = document.querySelector('#score-display')
 const displayLives = document.querySelector('#lives-display')
 const startBtn = document.querySelector('#start')
-const hide = document.querySelector('.hidden')
+const playAgainBtn = document.querySelector('#play-again')
+const pokeScore = document.querySelector('.poke-score')
+const instructions = document.querySelector('.instructions')
+const pokeLives = document.querySelector('.poke-lives')
+
+
+playAgainBtn.style.visibility = 'hidden'
+
 
 
 //* Variables
@@ -28,11 +35,11 @@ const height = 13
 const gridCellCount = width * height 
 const finalPortal = Math.floor(Math.random() * 10)
 const startingPosition = 137
-const obstaclePositions = [
+const enemyPositions = [
   [111, 115, 118], 
   [99, 105], 
   [89, 90, 91, 95, 96],
-  [85, 86, 87, 80, 81]
+  [85, 86, 87, 88, 80, 81, 82]
 ]
 const logPositions = [
   [45, 46, 51, 52],
@@ -52,7 +59,7 @@ let lives = 3
 let intervalId = null
 let timer = null
 let score = 0
-let froggerPosition = 137
+let playerPosition = 137
 
 
 
@@ -71,19 +78,19 @@ function createGrid() {
     grid.appendChild(cell)
   }
 }
-createGrid()
 
+createGrid()
 
 //*********************************************/
 //* Functions - adding Frogger & Obstacles   *
 //********************************************/
 
-function addFrogger() {
-  cells[froggerPosition].classList.add('frogger') 
+function addPlayer() {
+  cells[playerPosition].classList.add('player') 
 }
 
-function removeFrogger() {
-  cells[froggerPosition].classList.remove('frogger')
+function removePlayer() {
+  cells[playerPosition].classList.remove('player')
 }
 
 function addPortal() {
@@ -94,17 +101,17 @@ function removePortal() {
   cells[finalPortal].classList.remove('end-portal')
 }
 
-function addObstacles(obstacles, className) {
+function addEnemies(enemies, className) {
   // console.log('adding', obstacles)
-  obstacles.forEach(obstacle => {
-    cells[obstacle].classList.add(className)
+  enemies.forEach(enemy => {
+    cells[enemy].classList.add(className)
   })
 }
 
-function removeObstacles(obstacles, className) {
+function removeEnemies(enemies, className) {
   // console.log('removing', obstacles)
-  obstacles.forEach(obstacle => {
-    cells[obstacle].classList.remove(className)
+  enemies.forEach(enemy => {
+    cells[enemy].classList.remove(className)
   })
 }
 
@@ -135,14 +142,19 @@ function removeWaterCell(water, className) {
 
 
 function startGame() {
+  grid.classList.remove('hidden')
+  grid.classList.add('grid')
+  pokeScore.style.display = 'inline-block'
+  pokeLives.style.display = 'inline-block'
+  instructions.style.display = 'none'
   displayLives.textContent = lives
   checkEndGame()
-  addFrogger()                           
+  addPlayer()                           
   addPortal()
-  moveObstacle(900, 120, 0, 'obstacle-one')
-  moveObstacle(300, 109, 1, 'obstacle-two')
-  moveObstacle(1000, 88, 2, 'obstacle-three', -1)
-  moveObstacle(600, 77, 3, 'obstacle-four', -1)
+  moveEnemy(900, 120, 0, 'enemy-one')
+  moveEnemy(300, 109, 1, 'enemy-two')
+  moveEnemy(600, 88, 2, 'enemy-three', -1)
+  moveEnemy(1000, 77, 3, 'enemy-four', -1)
   moveLog(900, 54, 0, 'log-one')
   moveLog(700, 33, 1, 'log-two', -1)
   moveLog(500, 32, 2, 'log-three')
@@ -155,10 +167,27 @@ function startGame() {
   document.addEventListener('keyup', handleKeyControls)
 }
 
+function playAgain() {
+  location.reload()
+
+  // lives = 3
+  // displayLives.textContent = lives
+  // intervalId = null
+  // timer = null
+  // score = 0
+  // froggerPosition = 137
+
+  startGame()
+}
+
 function endGame(endgamestatement) {
   grid.classList.remove('grid')
   // grid.classList.add('hide')
   displayScore.innerHTML = endgamestatement
+  playAgainBtn.style.visibility = 'visible'
+  clearInterval(timer = setInterval)
+  removePlayer()
+  
 }
 
 function checkEndGame() {
@@ -166,7 +195,7 @@ function checkEndGame() {
     if (lives === 0) {
       endGame(`You are dead, you scored ${score}`)
     }
-    if (finalPortal === froggerPosition) {
+    if (finalPortal === playerPosition) {
       score += 1000
       if (score === 1000) {
         removePortal()
@@ -182,41 +211,41 @@ function checkEndGame() {
 //****************************** 
 
 function handleKeyControls(e) {
-  const x = froggerPosition % width
-  const y = Math.floor(froggerPosition / width)
+  const x = playerPosition % width
+  const y = Math.floor(playerPosition / width)
   e.preventDefault()
-  removeFrogger()              //* frogger must be removed first
+  removePlayer()              //* frogger must be removed first
 
   switch (e.code) {
 
     case 'KeyD':           //* right
       if (x < width - 1) {
-        froggerPosition++
+        playerPosition++
       }
       break
 
     case 'KeyA':           //* left
       if (x > 0) {
-        froggerPosition--
+        playerPosition--
       }
       break
 
     case 'KeyW':            //* up
       if (y > 0) {
-        froggerPosition -= width
+        playerPosition -= width
       }
       break
 
     case 'KeyS':            //* down
       if (y < width - 1) {
-        froggerPosition += width
+        playerPosition += width
       }
       break
     
     default: 
       console.log('key not recognised')
   }
-  addFrogger()
+  addPlayer()
   checkEndGame()
 }
 
@@ -227,25 +256,25 @@ function handleKeyControls(e) {
 //*    M O V I N G    O b s t a c l e s   *
 //*****************************************
 
-function moveObstacle(
+function moveEnemy(
   intervalTime, 
-  obstacleIndexTarget, 
+  enemyIndexTarget, 
   rowIndex,
   className,
   direction = 1
 ) {
   timer = setInterval(() => {
-    removeObstacles(obstaclePositions[rowIndex], className)
-    obstaclePositions[rowIndex] = obstaclePositions[rowIndex].map(obstacleIndex => {
-      if (obstacleIndex >= obstacleIndexTarget && direction === 1) {
-        return obstacleIndex -= 10
-      } else if (obstacleIndex <= obstacleIndexTarget && direction === -1) {
-        return obstacleIndex += 10
+    removeEnemies(enemyPositions[rowIndex], className)
+    enemyPositions[rowIndex] = enemyPositions[rowIndex].map(enemyIndex => {
+      if (enemyIndex >= enemyIndexTarget && direction === 1) {
+        return enemyIndex -= 10
+      } else if (enemyIndex <= enemyIndexTarget && direction === -1) {
+        return enemyIndex += 10
       } else {
-        return obstacleIndex += direction 
+        return enemyIndex += direction 
       }
     })
-    addObstacles(obstaclePositions[rowIndex], className) 
+    addEnemies(enemyPositions[rowIndex], className) 
     handleLose()
   
   }, intervalTime)
@@ -309,15 +338,15 @@ function moveWater(
 
 
 function handleLose() {
-  obstaclePositions.forEach(row => {
+  enemyPositions.forEach(row => {
     row.forEach(obstacle => {
-      if (cells[obstacle].classList.contains('frogger')) {
-        removeFrogger()
-        froggerPosition = 137
+      if (cells[obstacle].classList.contains('player')) {
+        removePlayer()
+        playerPosition = 137
         lives = lives - 1
         displayLives.textContent = lives
         checkEndGame()
-        addFrogger()
+        addPlayer()
         return 
       } 
     })
@@ -325,13 +354,13 @@ function handleLose() {
 
   waterCellPositions.forEach(waterCell => {
     waterCell.forEach(water => {
-      if (cells[water].classList.contains('frogger')) {
-        removeFrogger()
-        froggerPosition = 137
+      if (cells[water].classList.contains('player')) {
+        removePlayer()
+        playerPosition = 137
         lives = lives - 1
         displayLives.textContent = lives
         checkEndGame()
-        addFrogger()
+        addPlayer()
         return 
         
       }
@@ -352,3 +381,4 @@ function handleLose() {
 
 //* Events 
 startBtn.addEventListener('click', startGame)
+playAgainBtn.addEventListener('click', playAgain)

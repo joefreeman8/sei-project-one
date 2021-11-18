@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: rgb(5, 31, 22);
+background-image: url('../assets/png/grass.jpg');
 
 }
 
@@ -11,24 +11,64 @@ h1 {
   display: flex;
   justify-content: center;
   margin: 50px auto;
-  color: grey;
+  color:#ffcb05;
+  text-shadow: 5px 5px #2a75bb;
+  font-family: 'press start 2p', Arial, Helvetica, sans-serif;
 }
 
-/* .controls-wrapper {
+.controls-wrapper {
   display: flex;
   justify-content: center;
-  align-content: center; 
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
   
-} */
+} 
+
+#start {
+  width: 100px;
+  height: 100px;
+  margin: 20px;
+}
+
+.instructions {
+  font-size: 16px;
+  margin: 20px; 
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+.poke-score {
+  display: none;
+}
+
+.poke-lives {
+  display: none;
+}
+
+
+.controls {
+  background-position: center;
+  background-repeat: none;
+  width: 100px;
+  height: 80px;
+  margin: 40px;
+}
 
 
 .grid-wrapper {
   display: flex;
   justify-content: center;
+  margin-top: 20px;
+  
 
 }
 
 .grid { 
+  background-image: url('../assets/png/Arena.png');
+  background-repeat: none;
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   height: 600px;
@@ -37,102 +77,143 @@ h1 {
 }
 
 p {
-  color: grey;
+  color:#ffcb05;
+  text-shadow: 2px 2px #2a75bb;
+  font-family: 'press start 2p', Arial, Helvetica, sans-serif;
+  display: block;
 }
 
 .grid div {
-  border: rgba(59, 59, 59, 0.301) solid 1px;
-  color: grey;
   height: 8%;
   width: 9%;
   flex-grow: 1;
 }
+
+#play-again {
+  border: none;
+  color:#ffcb05;
+  text-shadow: 2px 2px #2a75bb;
+  font-family: 'press start 2p', Arial, Helvetica, sans-serif;
+  font-size: 18px;
+}
+
 
 .hidden {
   display: none;
 }
 
 .grid div.end-portal { 
-  background-color: rgb(23, 180, 17)
+  background-image: url('../assets/png/pokeball2.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-.grid div.frogger {
+.grid div.player {
   /* background-color: chartreuse; */
   background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif'); 
   background-repeat: no-repeat;
   background-size: contain;
 }
 
-.grid div.obstacle-one{
-  background-color: red;
+.grid div.enemy-one{
+  background-image: url('../assets/png/boulder.gif');
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 
-.grid div.obstacle-two {
-  background-color: yellow;
+.grid div.enemy-two {
+  background-image: url('../assets/png/pika.gif');
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 
-.grid div.obstacle-three {
-  background-color: purple;
+.grid div.enemy-three {
+  background-image: url('../assets/png/squirtle.gif');
   background-repeat: no-repeat;
   background-size: contain;
 }
 
 
-.grid div.obstacle-four {
-  background-color: tomato;
+.grid div.enemy-four {
+  background-image: url('../assets/png/bulb.gif');
+  background-repeat: no-repeat;
   background-size: contain;
 }
-
 
 
 .grid div.water-one {
-  background-color: rgb(0, 255, 255);
-  position: relative;
+  background-color: rgb(4, 212, 240);
+  background-image: url('../assets/png/water.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .grid div.water-two {
-  background-color: rgb(0, 255, 255);
-  position: relative;
+  background-color: rgb(4, 212, 240);
+  background-image: url('../assets/png/water.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .grid div.water-three {
-  background-color: rgb(0, 255, 255);
-  position: relative;
+  background-color: rgb(4, 212, 240);
+  background-image: url('../assets/png/water.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .grid div.water-four {
-  background-color: rgb(0, 255, 255);
-  position: relative;
+  background-color: rgb(4, 212, 240);
+  background-image: url('../assets/png/water.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
 }
-
 
 
 .grid div.log-one {
-  background-color: brown;
+  background-color: rgb(4, 212, 240);
+  background-image: url('../assets/png/wood4.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: relative;
 }
 
 .grid div.log-two {
-  background-color: brown;
+  background-color: rgb(4, 212, 240);
+  background-image: url('../assets/png/wood4.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 .grid div.log-three {
-  background-color: brown;
+  background-color: rgb(4, 212, 240);
+  background-image: url('../assets/png/wood4.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 .grid div.log-four {
-  background-color: brown;
+  background-color: rgb(4, 212, 240);
+  background-image: url('../assets/png/wood4.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
-.grid div.water.log::before {
-  content: '';
-  background-color: orange;
-  position: absolute;
-  size: contain;
+.grid div.log-one.player:before {
+  background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif');
   background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
 }
+
+.grid div.player {
+  /* background-color: chartreuse; */
+  background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif'); 
+  background-repeat: no-repeat;
+  background-size: contain;

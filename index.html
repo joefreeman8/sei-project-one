@@ -6,22 +6,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Project 1</title>
   <link rel="stylesheet" href="./styles/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <script src="./scripts/app.js" defer></script>
 </head>
 <body>
   <header>
-    <h1>Welcome To Frogger</h1>
+    <h1>Welcome To PokeDash</h1>
   </header>
   <main>
     <div class="grid-wrapper"> 
-      <div class="hide-grid">
-        <div class="grid"></div>
-        </div>
+        <div class="hidden" id="grid"></div>
       </div>
     <div class="controls-wrapper">
-      <button id="start">RUN!</button>
-      <p>Froggers Score <span id="score-display">0</span></p>
-      <p>Froggers Lives <span id="lives-display">3</span></p>
+      <img id="start" src="./assets/png/pokeballstart.png" alt="start button">
+      <p class="instructions">Click the PokeBall to start.<br/ ><br />The challenge is to reach the end PokeBall</p>
+      <p class="poke-score">Poke Score: <span id="score-display">0</span></p>
+      <p class="poke-lives">Poke Lives: <span id="lives-display">3</span></p>
+      <button id="play-again">Click here to open another Pokeball</button>
+      <br />
+      <img class="controls" src="./assets/png/controls1.png" alt="controls"></div>
     </div>
   </main>
 </body>
