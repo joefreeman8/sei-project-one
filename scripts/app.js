@@ -23,7 +23,7 @@ const playAgainBtn = document.querySelector('#play-again')
 const pokeScore = document.querySelector('.poke-score')
 const instructions = document.querySelector('.instructions')
 const pokeLives = document.querySelector('.poke-lives')
-
+const heading = document.querySelector('.heading')
 
 playAgainBtn.style.visibility = 'hidden'
 
@@ -33,7 +33,7 @@ playAgainBtn.style.visibility = 'hidden'
 const width = 11
 const height = 13
 const gridCellCount = width * height 
-const finalPortal = Math.floor(Math.random() * 10)
+const finalPokeBall = Math.floor(Math.random() * 10)
 const startingPosition = 137
 const enemyPositions = [
   [111, 115, 118], 
@@ -93,12 +93,12 @@ function removePlayer() {
   cells[playerPosition].classList.remove('player')
 }
 
-function addPortal() {
-  cells[finalPortal].classList.add('end-portal')
+function addPokeBall() {
+  cells[finalPokeBall].classList.add('poke-ball-end')
 }
 
-function removePortal() {
-  cells[finalPortal].classList.remove('end-portal')
+function removePokeBall() {
+  cells[finalPokeBall].classList.remove('poke-ball-end')
 }
 
 function addEnemies(enemies, className) {
@@ -142,6 +142,7 @@ function removeWaterCell(water, className) {
 
 
 function startGame() {
+  heading.style.visibility = 'hidden'
   grid.classList.remove('hidden')
   grid.classList.add('grid')
   pokeScore.style.display = 'inline-block'
@@ -150,7 +151,7 @@ function startGame() {
   displayLives.textContent = lives
   checkEndGame()
   addPlayer()                           
-  addPortal()
+  addPokeBall()
   moveEnemy(900, 120, 0, 'enemy-one')
   moveEnemy(300, 109, 1, 'enemy-two')
   moveEnemy(600, 88, 2, 'enemy-three', -1)
@@ -158,24 +159,27 @@ function startGame() {
   moveLog(900, 54, 0, 'log-one')
   moveLog(700, 33, 1, 'log-two', -1)
   moveLog(500, 32, 2, 'log-three')
-  moveLog(500, 11, 3, 'log-four', -1) 
+  moveLog(600, 11, 3, 'log-four', -1) 
   moveWater(900, 54, 0, 'water-one')
   moveWater(700, 33, 1, 'water-two', -1)
   moveWater(500, 32, 2, 'water-three')
-  moveWater(500, 11, 3, 'water-four', -1)
+  moveWater(600, 11, 3, 'water-four', -1)
   startBtn.style.visibility = 'hidden'
   document.addEventListener('keyup', handleKeyControls)
 }
 
 function playAgain() {
   location.reload()
-
-  // lives = 3
-  // displayLives.textContent = lives
-  // intervalId = null
-  // timer = null
-  // score = 0
-  // froggerPosition = 137
+  clearInterval(checkEndGame)
+  clearInterval(moveEnemy)
+  clearInterval(moveWater)
+  clearInterval(moveLog)
+  lives = 3
+  displayLives.textContent = lives
+  intervalId = null
+  timer = null
+  score = 0
+  playerPosition = 137
 
   startGame()
 }
@@ -195,10 +199,11 @@ function checkEndGame() {
     if (lives === 0) {
       endGame(`You are dead, you scored ${score}`)
     }
-    if (finalPortal === playerPosition) {
+    if (finalPokeBall === playerPosition) {
       score += 1000
       if (score === 1000) {
-        removePortal()
+        cells.classList.remove('player')
+        removePokeBall()
         displayScore.textContent = score
       }
       endGame(`Champion, your score is ${score}`)
@@ -368,15 +373,6 @@ function handleLose() {
   })
 }
 
-// function handleWin() {
-//   if (finalPortal === froggerPosition) {
-//     score += 100
-//     displayScore.textContent = score
-//     alert('you win', score)
-//     location.reload()
-//     startGame()
-//   }
-// } 
 
 
 //* Events 

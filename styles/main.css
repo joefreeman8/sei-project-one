@@ -22,7 +22,7 @@ h1 {
   flex-direction: column;
   align-content: center;
   align-items: center;
-  
+  margin-top: -60px;
 } 
 
 #start {
@@ -59,8 +59,7 @@ h1 {
 .grid-wrapper {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
-  
+  margin-top: 20px
 
 }
 
@@ -102,7 +101,7 @@ p {
   display: none;
 }
 
-.grid div.end-portal { 
+.grid div.poke-ball-end { 
   background-image: url('../assets/png/pokeball2.gif');
   background-repeat: no-repeat;
   background-size: contain;
@@ -113,6 +112,7 @@ p {
   background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif'); 
   background-repeat: no-repeat;
   background-size: contain;
+  position: relative;
 }
 
 .grid div.enemy-one{
@@ -187,6 +187,7 @@ p {
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
+  position: relative;
 }
 
 .grid div.log-three {
@@ -205,15 +206,52 @@ p {
   background-position: center;
 }
 
-.grid div.log-one.player:before {
+
+div .player.log-one::before {
+  content: '';
   background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
   position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 5%;
+  left: 5%;
 }
-
-.grid div.player {
-  /* background-color: chartreuse; */
-  background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif'); 
+div .player.log-two::before {
+  content: '';
+  background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 5%;
+  left: 5%;
+}
+div .player.log-three::before {
+  content: '';
+  background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 5%;
+  left: 5%;
+}
+div .player.log-four::before {
+  content: '';
+  background-image: url('https://img.pokemondb.net/sprites/black-white/anim/normal/charmander.gif');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 5%;
+  left: 5%;
+}
