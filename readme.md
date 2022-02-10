@@ -13,7 +13,7 @@ Armed with a brief, I had 1 week to make a game which was playable, had auto-gen
 * Deploy your game online, where the rest of the world can access it.
 * Use semantic markup for HTML and CSS (adhere to best practises).
  
-## Built with ##
+## Built With ##
 * HTML 
 * CSS
 * Vanilla JavaScript
@@ -26,7 +26,9 @@ The player has a total of 3 lives.
 Movement is based on: WASD.
  
 ## Deployment ##
-The deployed game can be found [**here**](https://joefreeman8.github.io/sei-project-one/ "here").
+The deployed game can be found [**here**](https://joefreeman8.github.io/sei-project-one/ "here.")
+
+![gameplay](/assets/gameplay.gif)
 
 ## Planning ##
 The wireframe was created using Excalidraw:
@@ -36,7 +38,7 @@ The wireframe was created using Excalidraw:
 By creating the plan this way I was able to easily visualise how my game would play and list all the features I wanted to include. 
 I had originally planned to make it a Rick and Morty theme (hence a randomised final portal/end goal) however after struggling to find any good sprites I switched to a Pokemon theme and made the portal a pokeball. 
 
-## Creating the grid ##
+## Creating The Grid ##
 First things first, create the surface in which the Pokemon can run and the logs can float. To do this I used DOM manipulation where I pushed cells into an empty div to create my grid. 
 I opted for 11 cells wide and 13 cells in height, and used the for loop below to create the grid. 
 ```js
@@ -115,12 +117,12 @@ function moveEnemy(
 ```
 The above just demonstrates each enemy, however I created replica functions for the log movement & water movement too, again allowing for greater customisation on each line of the game.
 
-To overcome the challenge of the log and water stage, I gave water cells the same killing abilities as the obstacles, and the log cells act just as any other ordinary cell on the grid, therefore providing safety for the player.
+To overcome the challenge of the log and water stage, I gave water cells the same killing abilities as the enemy Pokemon, and the log cells act just as any other ordinary cell on the grid, therefore providing safety for the player.
 
-Every time any obstacle or water cell moves, it will check for a collision.
+Every time any enemy Pokemon or water cell moves, it will check for a collision.
 
 ## Player Lives ##
-Every obstacle hit or poke-toe (Pokemons toe) which gets wet will result in a life lost and the player will be sent back to the starting cell. Once all lives are lost the player will be prompted to open another Pokeball which will allow for the game to be reset.
+Every obstacle hit or Poke-toe (Pokemons toe 👀) which gets wet will result in a life lost and the player will be sent back to the starting cell. Once all lives are lost the player will be prompted to open another Pokeball which will allow for the game to be reset.
 In order to do this I created a handleLose function which would move the player position back to the start, minus a life and then check if it’s the end of game.
 ```js
 function handleLose() {
@@ -139,7 +141,7 @@ function handleLose() {
  })
  ```
 
-## Winning the game/Losing the game ##
+## Winning / Losing The Game ##
 If the player reaches the safety of the Poke-ball they win the game, Great News!… or if the player loses all their lives they lose the game, less great news.
 I achieved this by adding a checkEndGame function which is called every time a player moves or has a collision with an obstacle/water.
 ```js
@@ -194,7 +196,7 @@ function playAgain() {
 * Playing the game again after winning or losing would make the interval timers implemented in my code to run again, giving the effect that everything was 2x speed. I created a work around of this with `window.restart()` in my code which refreshed the browser.
 
 ## Bugs ## 
-* The point of no return - this bug, I stemmed from the way I set up the player movement with the irregular grid size. It affects the game by not allowing the player to move backwards in the first two rows of the grid. Between you and me, it’s a good bug, stops the ‘poke-dash campers’.
+* The point of no return - this bug comes from the way I set up the player movement with the irregular grid size. It affects the game by not allowing the player to move backwards in the first two rows of the grid. Between you and me, it’s a good bug, stops the ‘poke-dash campers’.
 * The score mechanic, when reaching the pokeball may notice your score increases 1000 points per millisecond for eternity.
 
 ## Future Improvements ##
