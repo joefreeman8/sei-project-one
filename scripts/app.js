@@ -34,7 +34,7 @@ const width = 11
 const height = 13
 const gridCellCount = width * height 
 const finalPokeBall = Math.floor(Math.random() * 10)
-const startingPosition = 137
+// const startingPosition = 137
 const enemyPositions = [
   [111, 115, 118], 
   [99, 105], 
