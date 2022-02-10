@@ -160,7 +160,7 @@ function checkEndGame() {
  }, 100)
 }
 ```
-The endgame function in the code block above is then called and re grid is removed and score is displayed.
+The endGame function in the code block above is then called, the grid is removed and score is displayed.
 ```js
 function endGame(endgamestatement) {
  grid.classList.remove('grid')
