@@ -1,4 +1,4 @@
-# Software Engineer Immersive - Project One #
+# Software Engineering Immersive - Project One #
 
 A solo project in which we had to create a classic grid style game within 1 week.
 
