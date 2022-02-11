@@ -9,7 +9,7 @@ Armed with a brief, I had 1 week to make a game which was playable, had auto-gen
 * Render a game in the browser.
 * Include separate HTML / CSS / JavaScript files.
 * Stick with KISS (Keep It Simple Stupid) and DRY (Don't Repeat Yourself) principles.
-* Use Javascript for DOM manipulation.
+* Use JavaScript for DOM manipulation.
 * Deploy your game online, where the rest of the world can access it.
 * Use semantic markup for HTML and CSS (adhere to best practises).
  
@@ -212,7 +212,7 @@ function playAgain() {
 ## Wins & Key Learnings ##
 Bugs are an essential part of life, and planet Earth would not survive without them…
 
-Also, how incredibly useful it is to use arrays and the art of refactoring with the use of multiple arguments in functions. You can see in the history of my commits, initially they consisted of no arrays, this was my first solo lesson in how not to code. I fast realised my code was not ‘DRY’ and it could be better. I implemented arrays, so each row of obstacles were linked together by one array, this saved me writing a function for each individual obstacle. Next, I brought in the use of arguments within my functions, meaning I could control multiple arrays from one function. This was a challenge, a key learning and a win for me.
+Also, how incredibly useful it is to use arrays and the art of refactoring with the use of multiple arguments in functions. You can see in the history of my commits, initially they consisted of no arrays, this was my first solo lesson in how not to code. I quickly realised my code was not ‘DRY’ and it could be better. I implemented arrays, so each row of obstacles were linked together by one array, this saved me writing a function for each individual obstacle. Next, I brought in the use of arguments within my functions, meaning I could control multiple arrays from one function. This was a challenge, a key learning and a win for me.
 
 This project really enabled me to learn how functions can interact with each other and also how keeping the readability of your code clean and uncluttered helps a lot with debugging.
 
